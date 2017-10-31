@@ -1,0 +1,13 @@
+name: text-analyzer
+version: 0.1.0
+
+authors:
+  -  <filipe.lp.correia@gmail.com>
+
+targets:
+  text-analyzer:
+    main: src/text-analyzer.cr
+
+crystal: 0.23.1
+
+license: MIT
