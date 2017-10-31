@@ -8,6 +8,12 @@ targets:
   text-analyzer:
     main: src/text-analyzer.cr
 
+dependencies:
+  markd:
+    github: icyleaf/markd
+  cli:
+    github: mosop/cli
+
 crystal: 0.23.1
 
 license: MIT

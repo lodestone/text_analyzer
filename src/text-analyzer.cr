@@ -1,5 +1,5 @@
 require "./text-analyzer/*"
 
 module Text::Analyzer
-  # TODO Put your code here
+  Generate.run(ARGV)
 end
