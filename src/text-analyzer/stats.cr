@@ -1,36 +1,35 @@
 class Stats
-  property sentences : Array(String), words : Array(String), paragraphs : Array(String)
+  property text
 
-  def initialize(@paragraphs)
-    @sentences =  @paragraphs.flat_map {|f| f.split(".")}
-    @words = @paragraphs.flat_map {|f| f.split(/\W+/)}
+  def initialize(@text : String)
   end
 
-  def num_of_sentences
-    @sentences.size
+  def total_words : Float
+    @text.words.size.to_f
   end
 
-  def num_of_words
-    @words.size
+  def total_sentences : Float
+    @text.sentences.size.to_f
   end
 
-  def num_of_paragraphs
-    @paragraphs.size
+  def total_syllables : Float
+    @text.total_syllables.to_f
   end
 
-  def num_of_syllables
-    @words.map{|e| e.scan(/[aiouy]+e*|e(?!d$|ly).|[td]ed|le$/).size }.sum
+  def total_paragraphs : Float
+    @text.paragraphs.size.to_f
   end
+
 
   def flesh_reading_ease
-    206.835 - 1.05 * (num_of_words / num_of_sentences.to_f) - 84.6 * (num_of_syllables / num_of_words.to_f)
+    206.835 - 1.05 * (total_words / total_sentences) - 84.6 * (total_syllables / total_words)
   end
 
   def flesh_kincaid_reading_level
-    0.39 * (num_of_words / num_of_sentences.to_f) + 11.8 * (num_of_syllables / num_of_words.to_f) - 15.59
+    0.39 * (total_words / total_sentences) + 11.8 * (total_syllables / total_words) - 15.59
   end
 
   def word_table
-    words.group_by{|e| e.downcase }.map{|k,v| [k, v.size]}.sort_by{|(k,v)| -v.as(Int)}.map {|(k,v)| "#{k}: #{v}"}
+    @text.words.group_by{|e| e.downcase }.map{|k,v| [k, v.size]}.sort_by{|(k,v)| -v.as(Int)}.map {|(k,v)| "#{k}: #{v}"}
   end
 end

@@ -49,7 +49,7 @@ class CustomMDParser <  Markd::Renderer
   end
 
   def paragraph(node, entering)
-    out("\n#{node.text}")
+    out(node.text)
   end
 
   def emphasis(node, entering)
@@ -77,6 +77,6 @@ class CustomMDParser <  Markd::Renderer
   end
 
   def text(node, entering)
-    out(node.text)
+    out("\n#{node.text.gsub('"',"")}")
   end
 end
