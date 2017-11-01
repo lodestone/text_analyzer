@@ -30,6 +30,6 @@ class Stats
   end
 
   def word_table
-    @text.words.group_by{|e| e.downcase }.map{|k,v| [k, v.size]}.sort_by{|(k,v)| -v.as(Int)}.map {|(k,v)| "#{k}: #{v}"}
+    @text.words.group_by{|e| e.downcase }.map{|k,v| [k, v.size]}.sort_by{|(k,v)| -v.as(Int)}
   end
 end

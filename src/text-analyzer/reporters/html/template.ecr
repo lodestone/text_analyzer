@@ -1,0 +1,142 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css" />
+</head>
+
+<body>
+
+  <div class="tabs">
+    <ul>
+      <%- @documents.each do |(doc,stats)|%>
+
+        <li>
+          <a>
+            <%=doc.name%>
+          </a>
+        </li>
+        <%- end%>
+    </ul>
+  </div>
+
+  <%- @documents.each do |(doc, stats)|%>
+    <section class="section"></section>
+    <div class="container">
+      <h1 class='title'><%=doc.name%></h1>
+      <h2 class='subtitle'>
+            Totals
+          </h2>
+      <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading"> Paragraphs: </p>
+            <p class="title">
+              <%=stats.total_paragraphs%>
+            </p>
+          </div>
+        </div>
+
+        <div class="level-item has-text-centered">
+          <div>
+            <p class='heading'> Sentences: </p>
+            <p class='title'>
+              <%=stats.total_sentences%>
+            </p>
+          </div>
+        </div>
+
+        <div class="level-item has-text-centered">
+          <div>
+            <p class='heading'> Words: </p>
+            <p class='title'>
+              <%=stats.total_words%>
+            </p>
+          </div>
+        </div>
+
+        <div class="level-item has-text-centered">
+          <div>
+            <p class='heading'>Syllables: </p>
+            <p class='title'>
+              <%=stats.total_syllables%>
+            </p>
+          </div>
+        </div>
+      </nav>
+      <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class='heading'> Flesh Reading Ease: </p>
+            <p class='title'>
+              <%=stats.flesh_reading_ease.round(2)%>
+            </p>
+          </div>
+        </div>
+
+        <div class="level-item has-text-centered">
+          <div>
+            <p class='heading'> Flesh Kincaid Reading Level: </p>
+            <p class='title'>
+              <%=stats.flesh_kincaid_reading_level.round(2)%>
+            </p>
+          </div>
+        </div>
+      </nav>
+
+
+
+      <div class="tile is-ancestor">
+        <div class="tile">
+          <div>
+            <h2 class='subtitle'> Top 10 Words</h2> <br>
+
+            <table class="table">
+              <thead class="thead">
+                <th class="th">Word</th>
+                <th class="th">Count</th>
+              </thead>
+              <tbody class="tbody">
+                <%- stats.word_table.first(10).each do |(w, t)|%>
+                  <tr>
+                    <td>
+                      <%=w%>
+                    </td>
+                    <td>
+                      <%=t%>
+                    </td>
+                  </tr>
+                  <%-end%>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tile">
+          <div>
+            <h2 class="subtitle"> Top 10 Words By Length </h2>
+
+            <table class="table">
+              <thead class="thead">
+                <th class="th">Word</th>
+                <th class="th">Count</th>
+              </thead>
+              <tbody class="tbody">
+                <%- doc.text.words.sort_by{|e| -e.size}.first(10).each do |w|%>
+                  <tr>
+                    <td>
+                      <%=w%>
+                    </td>
+                  </tr>
+                  <%-end%>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    </section>
+    <%-end-%>
+</body>
+
+</html>

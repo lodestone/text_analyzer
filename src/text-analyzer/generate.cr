@@ -1,22 +1,26 @@
 require "cli"
+require "./reporters/*"
 
 class Generate < Cli::Command
   class Options
     arg_array "files"
-    string "--format", any_of: %w(html string)
+    string "--format", any_of: %w(html string), default: "string"
 
   end
 
   def run
-    files = args.files
+    documents = args.files
                 .map {|e| Document.new e }
-                .each {|e| report(e)}
+                .map {|document| {document, Stats.new(document.text)} }
+    reporter.new(documents).render
   end
 
-  def report(document)
-    stats = Stats.new(document.text)
-
-    reporter = StringReporter.new(document, stats)
-    puts(reporter.render)
+  def reporter : Reporter.class
+    if(args.format == "html")
+      HtmlReporter
+    else
+      StringReporter
+    end
   end
+
 end
