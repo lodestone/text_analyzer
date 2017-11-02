@@ -130,13 +130,16 @@
             <table class="table">
               <thead class="thead">
                 <th class="th">Word</th>
-                <th class="th">Count</th>
+                <th class="th">Length</th>
               </thead>
               <tbody class="tbody">
                 <%- doc.text.words.sort_by{|e| -e.size}.first(10).each do |w|%>
                   <tr>
                     <td>
                       <%=w%>
+                    </td>
+                    <td>
+                      <%=w.size%>
                     </td>
                   </tr>
                   <%-end%>
