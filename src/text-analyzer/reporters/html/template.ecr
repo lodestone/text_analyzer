@@ -2,16 +2,29 @@
 
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.css" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
 </head>
 
 <body>
-
+  <script>
+    $(() => {
+      $('.tabs a').click((e) => {
+        $('section.tab-section').hide();
+        var target = $(e.target);
+        $(`#${target.data('target')}`).show();
+        $('li.is-active').removeClass('is-active');
+        target.parent('li').addClass('is-active');
+      })
+      $('.tabs a').first().click();
+    })
+  </script>
   <div class="tabs">
     <ul>
       <%- @documents.each do |(doc,stats)|%>
 
-        <li>
-          <a>
+        <li class='tab'>
+          <a data-target='<%=doc.name%>'>
             <%=doc.name%>
           </a>
         </li>
@@ -20,7 +33,7 @@
   </div>
 
   <%- @documents.each do |(doc, stats)|%>
-    <section class="section"></section>
+    <section class="section tab-section" id='<%=doc.name%>'>
     <div class="container">
       <h1 class='title'><%=doc.name%></h1>
       <h2 class='subtitle'>
