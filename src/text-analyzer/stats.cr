@@ -32,4 +32,8 @@ class Stats
   def word_table
     @text.words.group_by{|e| e.downcase }.map{|k,v| [k, v.size]}.sort_by{|(k,v)| -v.as(Int)}
   end
+
+  def by_paragraph
+    StatsArray.new(@text.paragraphs)
+  end
 end
